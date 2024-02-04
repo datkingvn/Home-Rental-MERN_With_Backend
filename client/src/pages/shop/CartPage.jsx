@@ -39,19 +39,8 @@ const CartPage = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.deletedCount > 0) {
+                    if (data.message) {
                         refetch();
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Xoá thành công!",
-                            icon: "success"
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error",
-                            text: "Xoá không thành công!",
-                            icon: "error"
-                        });
                     }
                 })
         }
@@ -109,18 +98,12 @@ const CartPage = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        if (data.deletedCount > 0) {
+                        if (data) {
                             refetch();
                             Swal.fire({
                                 title: "Success!",
                                 text: "Xoá thành công!",
                                 icon: "success"
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Error",
-                                text: "Xoá không thành công!",
-                                icon: "error"
                             });
                         }
                     })
