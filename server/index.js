@@ -10,10 +10,6 @@ const PORT = process.env.PORT || 8888
 app.use(cors())
 app.use(express.json())
 
-
-// datperfect38
-// 4OVH3dREXdzpEGpl
-
 // MongoDB
 
 const { MongoClient, ServerApiVersion, ObjectId} = require('mongodb');
@@ -71,6 +67,22 @@ async function run() {
             const filter = { _id: new ObjectId(id) }; // Ensure ObjectId conversion
             const result = await cartCollections.deleteOne(filter);
             res.send(result);
+        });
+
+        // Update carts quantity
+        app.put('/carts/:id', async (req, res) => {
+            const id = req.params.id;
+            const { quantity } = req.body;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    quantity: parseInt(quantity, 10)
+                }
+            };
+
+            const result = await cartCollections.updateOne(filter, updateDoc, options);
         });
 
         await client.db("admin").command({ ping: 1 });
